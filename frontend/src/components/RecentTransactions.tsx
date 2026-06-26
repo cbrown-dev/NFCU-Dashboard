@@ -1,14 +1,46 @@
-import { Card, Table } from "react-bootstrap";
+import { Card, Table, Button } from "react-bootstrap";
+import { useState } from "react";
+import axios from "axios";
+
 function RecentTransactions() {
+  const [status, setStatus] = useState("");
+
+  const pingServer = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000");
+      setStatus(`✅ Server responded with ${response.status}`);
+      console.log(response.data);
+    } catch (error: any) {
+      console.error(error);
+
+      if (error.response) {
+        setStatus(`❌ ${error.response.status} ${error.response.statusText}`);
+      } else if (error.request) {
+        setStatus("❌ No response from server.");
+      } else {
+        setStatus(`❌ ${error.message}`);
+      }
+    }
+  };
+
   return (
     <>
-      {/* Transactions */}
       <Card>
-        <Card.Header>
-          <h4 className="mb-0">Recent Transactions</h4>
+        {/* Transactions */}
+        <Card.Header className="d-flex justify-content-between align-items-center">
+          <span>Recent Transactions</span>
+          <Button variant="primary" size="sm" onClick={pingServer}>
+            Ping Server
+          </Button>
         </Card.Header>
 
         <Card.Body>
+          {status && (
+            <div className="mb-3">
+              <strong>{status}</strong>
+            </div>
+          )}
+
           <Table responsive hover striped>
             <thead>
               <tr>
@@ -43,4 +75,5 @@ function RecentTransactions() {
     </>
   );
 }
+
 export default RecentTransactions;

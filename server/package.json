@@ -7,10 +7,12 @@
   "type": "commonjs",
   "main": "index.jsx",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon index.jsx"
   },
   "dependencies": {
-    "express": "^5.2.1"
+    "body-parser": "^2.3.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "plaid": "^42.2.0"
   }
 }
