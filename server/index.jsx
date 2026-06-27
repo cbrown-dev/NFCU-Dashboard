@@ -23,7 +23,7 @@ app.post("/hello", (req, res) => {
   res.json({ message: "Hello " + req.body.name + "!" });
 });
 
-app.post("/create_link_token", async (req, res) => {
+app.post("/create_link_token", async function (req, res) {
   const plaidRequest = {
     user: {
       client_user_id: "user",
